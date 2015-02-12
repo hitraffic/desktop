@@ -1,14 +1,13 @@
-// var w=960,h=500,
-// svg=d3.select("#chart")
-// .append("svg")
-// .attr("width",w)
-// .attr("height",h);
- 
-// var text=svg
-// .append("text")
-// .text("hello world")
-// .attr("y",50);
+var map = L.map('map').setView([21.4678, -157.9807], 11);
+    mapLink = 
+      '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer(
+      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; ' + mapLink,
+      maxZoom: 18,
+      }).addTo(map);
 
 
-// d3.select('body').append('p');
-// d3.select('body').append('svg').attr('width', 50).attr('height', 50)
+L.marker([21.4678, -157.9807], 11).addTo(map)
+    .bindPopup('Some crazy shit happened here, avoid this area at all costs.')
+    .openPopup();
