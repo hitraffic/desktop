@@ -3,14 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Desktop</title>
+   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
 </head>
 <body>
 
-
   <div id="chart">
-
   <script src="/bower_components/d3/d3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
   <script src="/styles/styles.css"></script>
   <script src="/app/app.js"></script>
+
+  <div id="map" style="width: 600px; height: 400px"></div>
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+
+    <script>
+      var map = L.map('map').setView([21.4678, -157.9807], 11);
+          mapLink = 
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+          L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; ' + mapLink,
+            maxZoom: 18,
+            }).addTo(map);
+
+    </script>
+
 </body>
 </html>
+
