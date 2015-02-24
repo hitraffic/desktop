@@ -1,4 +1,3 @@
-// var map = L.map('map').setView([21.4678, -157.9807], 11);
 var mapLink = 
       '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 var baseLayer = L.tileLayer(
@@ -7,8 +6,9 @@ var baseLayer = L.tileLayer(
       maxZoom: 18,
       });
 
+//Heatmap test data
 var testData = {
-  max: 5,
+  max: 100,
   data: [{lat: 21.297355, lng:-157.861581, count: 3},{lat: 21.412146, lng:-157.746353, count: 2}]
 };
 
@@ -41,6 +41,7 @@ var map = new L.Map('map', {
 
 heatmapLayer.setData(testData);
 
+//Display popup with mock data
 var markers = [];
 
 for (var i = 0; i < incidents.length; i++){
@@ -55,19 +56,15 @@ for (var i = 0; i < incidents.length; i++){
   } 
 }
 
-// var markers = L.marker([21.4678, -157.9807], 11).addTo(map)
-//     .bindPopup('Some crazy shit happened here, avoid this area at all costs.')
-//     .openPopup();
+var markerLayer = L.layerGroup(markers);
 
-// console.log(markers);
-var marker = L.layerGroup(markers);
-
+//Filter between heatmap and popup
 var baseMaps = {
   "Map" : baseLayer
 };
 var overlaysMaps = {
   "Heatmap" : heatmapLayer,
-  "Popup" : marker
+  "Popup" : markerLayer
 };
 
 L.control.layers(baseMaps, overlaysMaps).addTo(map);
