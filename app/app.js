@@ -41,16 +41,34 @@ var map = new L.Map('map', {
 
 heatmapLayer.setData(testData);
 
-var markers = L.marker([21.4678, -157.9807], 11).addTo(map)
-    .bindPopup('Some crazy shit happened here, avoid this area at all costs.')
-    .openPopup();
+var markers = [];
+
+for (var i = 0; i < incidents.length; i++){
+  var type = incidents[i].type;
+  var lng = incidents[i].lng;
+  var lat = incidents[i].lat;
+  if (incidents[i].lng === null || incidents[i].lat === null){
+    continue;
+  }
+  else{
+    markers.push(L.marker([lat, lng],11).addTo(map).bindPopup(type));
+  } 
+}
+
+// var markers = L.marker([21.4678, -157.9807], 11).addTo(map)
+//     .bindPopup('Some crazy shit happened here, avoid this area at all costs.')
+//     .openPopup();
+
+// console.log(markers);
+var marker = L.layerGroup(markers);
 
 var baseMaps = {
   "Map" : baseLayer
 };
 var overlaysMaps = {
   "Heatmap" : heatmapLayer,
-  "Popup" : markers
+  "Popup" : marker
 };
 
 L.control.layers(baseMaps, overlaysMaps).addTo(map);
+
