@@ -69,3 +69,5 @@ var overlaysMaps = {
 
 L.control.layers(baseMaps, overlaysMaps).addTo(map);
 
+$('.leaflet-control-layers-selector').attr('id','checkboxu');
+$("#checkboxu").prop("checked", true);
