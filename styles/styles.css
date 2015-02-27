@@ -53,6 +53,34 @@ html, body, div#map {
   padding: 0px;
 }
 
+div.my-custom-control {
+  padding: 6px 8px;
+  font: 18px Arial, Helvetica, sans-serif;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+div.my-custom-control h1 {
+  text-align: center;
+  font-weight: bold;
+  margin: 0 0 5px;
+  color: #777;
+}
+
+div.my-custom-control li {
+  margin: 0 20px 5px;
+  color: #777;
+  font-size: 15px;
+  list-style-type: circle;
+}
+
+div.leaflet-bottom.leaflet-left {
+  bottom: 45px;
+  left: 45px;
+}
+
 /*DESKTOP*/
 /*@media only screen and (min-width: 769px) {
   div#map {
