@@ -59,15 +59,33 @@ for (var i = 0; i < incidents.length; i++){
 var markerLayer = L.layerGroup(markers);
 
 //Filter between heatmap and popup
-var baseMaps = {
-  "Map" : baseLayer
-};
 var overlaysMaps = {
   "Heatmap" : heatmapLayer,
-  "Popup" : markerLayer
+  "Markers" : markerLayer
 };
 
-L.control.layers(baseMaps, overlaysMaps).addTo(map);
+L.control.layers(overlaysMaps).addTo(map);
 
-$('.leaflet-control-layers-selector').attr('id','checkboxu');
-$("#checkboxu").prop("checked", true);
+// Info box
+var MyControl = L.Control.extend({
+  options: {
+      position: 'bottomleft'
+  },
+
+  onAdd: function (map) {
+    // create the control container with a particular class name
+    var container = L.DomUtil.create('div', 'my-custom-control');
+
+    // ... initialize other DOM elements, add listeners, etc.
+    container.innerHTML = "<h1>HI Traffic</h1>" + 
+    "<ul><li>Bringing you the latest reported accidents and highest accident prone areas.</li>" + 
+    "<li>Click on the markers to view the accidents type.</li>" + 
+    "<li>The heatmap shows areas with the most accidents.</li>" + 
+    "<li>Hover over the icon on the top right corner to toggle between Markers and Heatmap.</li></ul>";
+
+    return container;
+  }
+});
+
+
+map.addControl(new MyControl());
