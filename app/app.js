@@ -1,3 +1,4 @@
+// Creates the map
 var mapLink = 
       '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 var baseLayer = L.tileLayer(
@@ -6,7 +7,7 @@ var baseLayer = L.tileLayer(
       maxZoom: 18,
       });
 
-//Heatmap test data
+// Heatmap test data
 var testData = {
   max: 100,
   data: [{lat: 21.297355, lng:-157.861581, count: 3},{lat: 21.412146, lng:-157.746353, count: 2}]
@@ -41,7 +42,7 @@ var map = new L.Map('map', {
 
 heatmapLayer.setData(testData);
 
-//Display popup with mock data
+// Display popup with mock data
 var markers = [];
 
 for (var i = 0; i < incidents.length; i++){
@@ -56,7 +57,7 @@ for (var i = 0; i < incidents.length; i++){
   } 
 }
 
-// Hovering markers for opening and closing popups
+// Hovering markers open and close popups
 markers.forEach(function (e) {
   e.on('mouseover', function() {
     this.openPopup();
@@ -69,9 +70,10 @@ markers.forEach(function (e) {
   });
 });
 
+// Puts all the markers in one group
 var markerLayer = L.layerGroup(markers);
 
-//Filter between heatmap and markers
+// Filter between heatmap and markers
 var overlaysMaps = {
   "Heatmap" : heatmapLayer,
   "Markers" : markerLayer
