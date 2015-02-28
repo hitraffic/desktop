@@ -56,12 +56,22 @@ for (var i = 0; i < incidents.length; i++){
   } 
 }
 
-var mark = L.marker([21.4678, -157.9807], {riseOnHover: true}).addTo(map)
-     .bindPopup('Some crazy shit happened here, avoid this area at all costs.');
+// Hovering markers for opening and closing popups
+markers.forEach(function (e) {
+  e.on('mouseover', function() {
+    this.openPopup();
+  });
+});
+
+markers.forEach(function (e) {
+  e.on('mouseout', function() {
+    this.closePopup();
+  });
+});
 
 var markerLayer = L.layerGroup(markers);
 
-//Filter between heatmap and popup
+//Filter between heatmap and markers
 var overlaysMaps = {
   "Heatmap" : heatmapLayer,
   "Markers" : markerLayer
@@ -82,7 +92,7 @@ var MyControl = L.Control.extend({
     // ... initialize other DOM elements, add listeners, etc.
     container.innerHTML = "<h1>HI Traffic</h1>" + 
     "<ul><li>Bringing you the latest reported accidents and highest accident prone areas.</li>" + 
-    "<li>Click on the markers to view the accidents type.</li>" + 
+    "<li>Hover over the markers to view the accidents type.</li>" + 
     "<li>The heatmap shows areas with the most accidents.</li>" + 
     "<li>Hover over the icon on the top right corner to toggle between Markers and Heatmap.</li></ul>";
 
