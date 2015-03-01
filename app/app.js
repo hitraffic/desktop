@@ -13,6 +13,9 @@ var testData = {
   data: [{lat: 21.297355, lng:-157.861581, count: 3},{lat: 21.412146, lng:-157.746353, count: 2}]
 };
 
+
+
+
 var cfg = {
   // radius should be small ONLY if scaleRadius is true (or small radius is intended)
   // if scaleRadius is false it will be the constant radius used in pixels
@@ -41,21 +44,45 @@ var map = new L.Map('map', {
 });
 
 heatmapLayer.setData(testData);
-
+// throw data date into a date obj
 // Display popup with mock data
 var markers = [];
+var incidents = $.get('http://api.hitraffic.org/api/incidents', function(data){
+  for (var i = 0; i < data.length; i++){
+    var type = data[i].type;
+    var lng = data[i].lng;
+    var lat = data[i].lat;
+    var date = data[i].date;
 
-for (var i = 0; i < incidents.length; i++){
-  var type = incidents[i].type;
-  var lng = incidents[i].lng;
-  var lat = incidents[i].lat;
-  if (incidents[i].lng === null || incidents[i].lat === null){
-    continue;
+///////////////////////
+// 2 hours ago code  //
+///////////////////////
+
+    var twoHoursAgo = 60 * 120 * 1000;
+    var createdDate = moment(date);
+    var withinTwoHours = [];
+    var olderThanTwoHours = [];
+
+/////////////////////////////////////////////////////////////////////////
+// this is for older than two hours and is data for heatmap //
+/////////////////////////////////////////////////////////////////////////
+
+    if(moment(new Date()).diff(createdDate) >= twoHoursAgo){
+      olderThanTwoHours.push(createdDate);
+    }
+    if (data[i].lng === null || data[i].lat === null){
+      continue;
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    // this displays everything else that is within 2 hours as css popups //
+    ////////////////////////////////////////////////////////////////////////
+    
+    else{
+      markers.push(L.marker([lat, lng]).addTo(map).bindPopup(type));
+    } 
   }
-  else{
-    markers.push(L.marker([lat, lng]).addTo(map).bindPopup(type));
-  } 
-}
+});
 
 // Hovering markers open and close popups
 markers.forEach(function (e) {
@@ -101,5 +128,6 @@ var MyControl = L.Control.extend({
     return container;
   }
 });
+
 
 map.addControl(new MyControl());
