@@ -1,3 +1,4 @@
+// Creates the map
 var mapLink = 
       '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 var baseLayer = L.tileLayer(
@@ -6,7 +7,7 @@ var baseLayer = L.tileLayer(
       maxZoom: 18,
       });
 
-//Heatmap test data
+// Heatmap test data
 var testData = {
   max: 100,
   data: [{lat: 21.297355, lng:-157.861581, count: 3},{lat: 21.412146, lng:-157.746353, count: 2}]
@@ -41,7 +42,7 @@ var map = new L.Map('map', {
 
 heatmapLayer.setData(testData);
 
-//Display popup with mock data
+// Display popup with mock data
 var markers = [];
 
 for (var i = 0; i < incidents.length; i++){
@@ -52,13 +53,27 @@ for (var i = 0; i < incidents.length; i++){
     continue;
   }
   else{
-    markers.push(L.marker([lat, lng],11).addTo(map).bindPopup(type));
+    markers.push(L.marker([lat, lng]).addTo(map).bindPopup(type));
   } 
 }
 
+// Hovering markers open and close popups
+markers.forEach(function (e) {
+  e.on('mouseover', function() {
+    this.openPopup();
+  });
+});
+
+markers.forEach(function (e) {
+  e.on('mouseout', function() {
+    this.closePopup();
+  });
+});
+
+// Puts all the markers in one group
 var markerLayer = L.layerGroup(markers);
 
-//Filter between heatmap and popup
+// Filter between heatmap and markers
 var overlaysMaps = {
   "Heatmap" : heatmapLayer,
   "Markers" : markerLayer
@@ -79,7 +94,7 @@ var MyControl = L.Control.extend({
     // ... initialize other DOM elements, add listeners, etc.
     container.innerHTML = "<h1>HI Traffic</h1>" + 
     "<ul><li>Bringing you the latest reported accidents and highest accident prone areas.</li>" + 
-    "<li>Click on the markers to view the accidents type.</li>" + 
+    "<li>Hover over the markers to view the accidents type.</li>" + 
     "<li>The heatmap shows areas with the most accidents.</li>" + 
     "<li>Hover over the icon on the top right corner to toggle between Markers and Heatmap.</li></ul>";
 
